@@ -15,7 +15,7 @@ html,body{
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
-  background-color: #f3f3f3;
+  background-color: $bg-color;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
