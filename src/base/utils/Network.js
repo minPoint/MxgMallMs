@@ -5,7 +5,6 @@ class Network {
 
     GET = (url,params) =>{
         return new Promise((resolve, reject) => {
-            console.log(url)
             axios.get(url, params )
                 .then((response)=>{
                     resolve(response);

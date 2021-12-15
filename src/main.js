@@ -9,10 +9,14 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
 import axios from "axios";
+import ServiceCenter from "./base/utils/ServiceCenter";
+import BaseUtils from "./base/utils/BaseUtils";
 
 let app = createApp(App);
 
-app.config.globalProperties.$axios = axios;
+// app.config.globalProperties.$axios = axios;
+app.config.globalProperties.$serviceCenter = ServiceCenter;
+app.config.globalProperties.$baseUtils = BaseUtils;
 
 app.use(store);
 app.use(router);

@@ -6,17 +6,17 @@ const routes = [
     name: 'Index',
     component:  () => import(/* webpackChunkName: "about" */ '../views/Index.vue')
   },
-  {
-    path: '/home',
-    name: 'Home',
-    component:  () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
-    children:[
-      {
-        path:"/dashboard",
-        component: ()=> import('../views/home/DashBoard'),
-      }
-    ]
-  }
+  // {
+  //   path: '/home',
+  //   name: 'Home',
+  //   component:  () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
+  //   children:[
+  //     {
+  //       path:"/dashboard",
+  //       component: ()=> import('../views/home/DashBoard'),
+  //     }
+  //   ]
+  // }
 ]
 
 const router = createRouter({

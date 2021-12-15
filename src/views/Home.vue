@@ -39,15 +39,16 @@
                 text-color="#fff"
                 @open="handleOpen"
                 @close="handleClose"
+                router
             >
-              <el-sub-menu :index="menu.dbId" v-for="menu in menuList">
+              <el-sub-menu :index="menu.path" v-for="menu in this.$store.getters.menuList">
                 <template #title>
                   <el-icon v-if="menu.icon">
                     <!--                    <location/>-->
                   </el-icon>
                   <span v-text="menu.name"></span>
                 </template>
-                <el-menu-item :index="menu.dbId + '-' + sonMenu.dbId " v-for="sonMenu in menu.sonMenuList">
+                <el-menu-item :index="sonMenu.path" v-for="sonMenu in menu.sonMenuList">
                   {{ sonMenu.name }}
                 </el-menu-item>
               </el-sub-menu>
@@ -56,7 +57,7 @@
         </el-row>
       </el-aside>
       <el-container>
-        <el-main>
+        <el-main style="width: 100%;height: 100%;background-color: red">
           <router-view/>
         </el-main>
         <el-footer>
@@ -71,7 +72,6 @@
 // @ is an alias to /src
 import Footer from '@/components/Footer.vue'
 import ServiceCenter from "../base/utils/ServiceCenter";
-import axios from "axios";
 
 export default {
   name: 'Home',
@@ -83,44 +83,6 @@ export default {
       menuList: []
     }
   },
-  created() {
-    // console.log(this.$router.getRoutes());
-    ServiceCenter.MenuService.listMenuTree().then((response)=>{
-      // console.log(this.$router.getRoutes());
-      // console.log(response)
-      this.menuList = response.data;
-      console.log(response.data)
-      let routerList = this.$router.getRoutes();
-      let rootRouter;
-      for (let router of routerList) {
-        if (router.name === "Home") {
-          rootRouter = router;
-          break;
-        }
-      }
-      this.menuTree(rootRouter, this.menuList);
-      console.log(rootRouter)
-    })
-  },
-  methods: {
-    menuTree(fatherMenu, menuList) {
-      fatherMenu.children = [];
-
-      for (let menu of menuList) {
-        if (!menu['component']) {
-          continue;
-        }
-        let sonMenu = {
-          path: menu.path,
-          // component: import(menu['component'])
-        };
-        if (menu.sonMenuList && menu.sonMenuList.length > 0) {
-          this.menuTree(sonMenu, menu.sonMenuList);
-        }
-        fatherMenu.children.push(sonMenu);
-      }
-    }
-  }
 }
 </script>
 <style scoped lang="scss">

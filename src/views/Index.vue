@@ -2,21 +2,21 @@
   <div class="login-container">
     <h1 class="login-title">幕熙阁</h1>
     <p class="login-desc">ADMIN DASHBOARD</p>
-    <form action="#" :model="login" class="login-form">
+    <form action="#" :model="loginFrom" class="login-form">
       <label for="#">
-        <input type="text" v-model="login.account" placeholder="账户">
+        <input type="text" v-model="loginFrom.account" placeholder="账户">
       </label>
       <label for="#">
-        <input type="text" v-model="login.pwd" placeholder="密码">
+        <input type="text" v-model="loginFrom.pwd" placeholder="密码">
       </label>
       <label for="#" id="msg-code">
-        <input type="text" v-model="login.pwd" placeholder="验证码">
+        <input type="text" v-model="loginFrom.pwd" placeholder="验证码">
         <a class="button">
           验证码
         </a>
       </label>
       <label for="#" id="login-contain">
-        <a class="button"  @click="loginDashBoard()">
+        <a class="button"  @click="login()">
             登录
         </a>
       </label>
@@ -28,6 +28,8 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 
+import ServiceCenter from "../base/utils/ServiceCenter";
+
 export default {
   name: 'Index',
   components: {
@@ -35,16 +37,66 @@ export default {
   },
   data() {
     return {
-      login: {
+      loginFrom: {
         account: "",
         pwd: ""
       },
     }
   },
   methods: {
-    loginDashBoard() {
-      this.$router.replace({name: "Home"})
+    /**
+     * 用户登录
+     */
+    login() {
+      // 请求路由配置
+      ServiceCenter.MenuService.listMenuTree().then((response)=>{
+        this.$store.commit("setMenuList",response.data);
+        for(let menu of response.data){
+          let router = this.createRouter(menu);
+
+          // 如果存在子菜单，则递归生产
+          if (menu.sonMenuList && menu.sonMenuList.length > 0) {
+            this.menuTree(router, menu.sonMenuList);
+          }
+          this.$router.addRoute(router);
+        }
+        this.$router.replace({name: "Home"})
+      })
     },
+    /**
+     * 创建路由对象
+     * @param menu 菜单对象
+     * @return {{path, component: (function(): Promise<*>), children: [], name}}
+     */
+    createRouter(menu){
+      return {
+        name: menu.name,
+        path: menu.path,
+        component: () => import('@/views/' + menu.component),
+        children: []
+      }
+    },
+    /**
+     * 生存路由树
+     * @param fatherMenu 父级路由
+     * @param menuList 子路由
+     */
+    menuTree(fatherMenu, menuList) {
+      for (let menu of menuList) {
+        // 如果当前路径没有配置路由，则跳过
+        if (!menu['component']) {
+          continue;
+        }
+        // 创建路径
+        let sonMenu = this.createRouter(menu);
+        // 如果存在子菜单，则递归生产
+        if (menu.sonMenuList && menu.sonMenuList.length > 0) {
+          this.menuTree(sonMenu, menu.sonMenuList);
+        }
+        // 添加到父级菜单中
+        fatherMenu.children.push(sonMenu);
+      }
+    }
   }
 }
 </script>
