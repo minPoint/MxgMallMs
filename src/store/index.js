@@ -5,7 +5,9 @@ export default createStore({
     menuList:[]
   },
   getters: {
-    menuList: (state)=>{return state.menuList}
+    menuList: (state)=>{
+      return state.menuList
+    }
   },
   mutations: {
     setMenuList(state, menuList){

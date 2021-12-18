@@ -46,7 +46,7 @@
                   <el-icon v-if="menu.icon">
                     <!--                    <location/>-->
                   </el-icon>
-                  <span v-text="menu.name"></span>
+                  <span v-text="menu.title"></span>
                 </template>
                 <el-menu-item :index="sonMenu.path" v-for="sonMenu in menu.sonMenuList">
                   {{ sonMenu.name }}
@@ -57,7 +57,7 @@
         </el-row>
       </el-aside>
       <el-container>
-        <el-main style="width: 100%;height: 100%;background-color: red">
+        <el-main style="width: 100%;height: 100%">
           <router-view/>
         </el-main>
         <el-footer>

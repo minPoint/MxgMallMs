@@ -6,6 +6,8 @@ import store from './store'
 // eslint-disable-next-line import/no-unresolved
 
 import ElementPlus from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+
 import 'element-plus/dist/index.css'
 
 import axios from "axios";
@@ -21,6 +23,8 @@ app.config.globalProperties.$baseUtils = BaseUtils;
 app.use(store);
 app.use(router);
 // app.use(STable);
-app.use(ElementPlus);
+app.use(ElementPlus, {
+    locale: zhCn,
+});
 
 app.mount('#app')

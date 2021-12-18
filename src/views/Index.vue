@@ -49,17 +49,21 @@ export default {
      */
     login() {
       // 请求路由配置
-      ServiceCenter.MenuService.listMenuTree().then((response)=>{
-        this.$store.commit("setMenuList",response.data);
-        for(let menu of response.data){
-          let router = this.createRouter(menu);
-
-          // 如果存在子菜单，则递归生产
-          if (menu.sonMenuList && menu.sonMenuList.length > 0) {
-            this.menuTree(router, menu.sonMenuList);
-          }
-          this.$router.addRoute(router);
+      ServiceCenter.MenuService.listMenu().then((response)=>{
+        // 获取管理页面主路由
+        let homePageMenu = response.list.filter(e=>{ return e.homePage === 1})[0];
+        let rootRouter = this.createRouter(homePageMenu);
+        // 获取有组件和路径的菜单信息
+        let menuList = response.list.filter(e=>{ return e.homePage !== 1 && e.component && e.path});
+        for(let menu of menuList){
+          rootRouter.children.push(this.createRouter(menu));
+            // this.menuTree(rootRouter, menu.sonMenuList);
+          this.$router.addRoute(rootRouter);
         }
+
+        return ServiceCenter.MenuService.listMenuTree();
+      }).then((response) => {
+        this.$store.commit("setMenuList", response);
         this.$router.replace({name: "Home"})
       })
     },
