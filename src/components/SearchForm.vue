@@ -1,16 +1,14 @@
 <template>
   <el-form :inline="true" :model="form" class="form-inline">
     <el-form-item :label="item.label" v-for="item in fields">
-      <el-input v-if="item.type === 'text'" v-model="form[item.label]" :placeholder="item.placeholder"></el-input>
-      <el-select v-if="item.type === 'select'" v-model="form[item.label]" :placeholder="item.placeholde">
+      <el-input v-if="item.type === 'text'" v-model="form[item.field]" :placeholder="item.placeholder"></el-input>
+      <el-select v-if="item.type === 'select'" v-model="form[item.field]" :placeholder="item.placeholde">
         <el-option :label="option.label" :value="option.value" v-for="option in item.options"></el-option>
-<!--        <el-option label="一级菜单" value="1"></el-option>-->
-<!--        <el-option label="二级菜单" value="2"></el-option>-->
       </el-select>
 
     </el-form-item>
     <el-form-item>
-      <el-button type="primary">搜索</el-button>
+      <el-button type="primary" @click="search()">搜索</el-button>
       <el-button type="danger">重置</el-button>
 
     </el-form-item>
@@ -32,6 +30,11 @@ export default {
   },
   created() {
     console.log(this.fields);
+  },
+  methods:{
+    search(){
+      this.$emit("search")
+    }
   }
 }
 </script>

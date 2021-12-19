@@ -3,8 +3,10 @@
  */
 
 import Network from "./Network";
+import lodash from "lodash";
 const BaseUtils = {
-    network: new Network()
+    network: new Network(),
+    lodash
 }
 
 export default BaseUtils

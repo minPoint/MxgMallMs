@@ -1,5 +1,5 @@
 <template>
-  <SearchForm :fields="searchForm.fields" :form="searchForm.form"/>
+  <SearchForm :fields="searchForm.fields" :form="searchForm.form" @search="search"/>
   <Table :data="table.data" :fields="table.fields" :page-info="pageInfo"/>
 </template>
 
@@ -18,6 +18,11 @@ export default {
   },
   created() {
     console.log(this.table);
+  },
+  methods:{
+    search(){
+      this.$emit("search");
+    }
   }
 }
 </script>
