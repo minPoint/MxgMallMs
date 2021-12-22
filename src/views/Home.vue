@@ -49,7 +49,7 @@
                   <span v-text="menu.title"></span>
                 </template>
                 <el-menu-item :index="sonMenu.path" v-for="sonMenu in menu.sonMenuList">
-                  {{ sonMenu.name }}
+                  {{ sonMenu.title }}
                 </el-menu-item>
               </el-sub-menu>
             </el-menu>

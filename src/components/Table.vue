@@ -8,8 +8,6 @@
       :page-size="pageInfo.pageSize"
       layout="sizes, prev, pager, next"
       :total="pageInfo.total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
   />
 </template>
 
@@ -17,9 +15,15 @@
 export default {
   name: "Table",
   props: {
-    data:[],
-    fields:[],
-    pageInfo:{},
+    data:{
+      type: Array,
+    },
+    fields:{
+      type: Array,
+    },
+    pageInfo:{
+      type: Object
+    },
     options: {
       table: {
         props: {
@@ -265,9 +269,7 @@ export default {
     }
   },
   created() {
-    console.log(this.data);
-    console.log(this.fields);
-    console.log(this.pageInfo);
+
   },
   methods:{
 

@@ -1,10 +1,10 @@
 import axios from "../../axios";
+import BaseUtils from "./BaseUtils";
 
 
 class Network {
 
     GET = (url,params) =>{
-        console.log(params);
         return new Promise((resolve, reject) => {
             axios.get(url, {params},{} )
                 .then((response)=>{

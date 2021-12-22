@@ -20,8 +20,12 @@
 export default {
   name: "SearchForm",
   props: {
-    fields:[],
-    form:{},
+    fields:{
+      type: Array,
+    },
+    form:{
+      type: Object,
+    },
   },
   data() {
     return {

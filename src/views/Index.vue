@@ -49,12 +49,12 @@ export default {
      */
     login() {
       // 请求路由配置
-      ServiceCenter.MenuService.listMenu().then((response)=>{
+      ServiceCenter.MenuService.list().then((response)=>{
         // 获取管理页面主路由
-        let homePageMenu = response.list.filter(e=>{ return e.homePage === 1})[0];
+        let homePageMenu = response.data.filter(e=>{ return e.homePage === 1})[0];
         let rootRouter = this.createRouter(homePageMenu);
         // 获取有组件和路径的菜单信息
-        let menuList = response.list.filter(e=>{ return e.homePage !== 1 && e.component && e.path});
+        let menuList = response.data.filter(e=>{ return e.homePage !== 1 && e.component && e.path});
         for(let menu of menuList){
           rootRouter.children.push(this.createRouter(menu));
             // this.menuTree(rootRouter, menu.sonMenuList);
