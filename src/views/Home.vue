@@ -37,11 +37,9 @@
                 class="el-menu-vertical-demo"
                 default-active="2"
                 text-color="#fff"
-                @open="handleOpen"
-                @close="handleClose"
                 router
             >
-              <el-sub-menu :index="menu.path" v-for="menu in this.$store.getters.menuList">
+              <el-sub-menu :index="menu.id" v-for="menu in this.$store.getters.menuList">
                 <template #title>
                   <el-icon v-if="menu.icon">
                     <!--                    <location/>-->

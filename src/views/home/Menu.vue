@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import Model from "../../components/Model";
-import ServiceCenter from "../../base/utils/ServiceCenter";
+import Model from "@/components/Model";
+import ServiceCenter from "@/base/utils/ServiceCenter";
 
 export default {
   name: "Menu",

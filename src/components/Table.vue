@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="data" v-if="data" border style="width: 100%">
+  <el-table :data="data" v-if="data" border style="width: 100%;margin-top: 20px">
     <el-table-column v-for="col in fields" :prop="col.prop" :label="col.label"/>
   </el-table>
   <el-pagination

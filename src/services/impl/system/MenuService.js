@@ -1,5 +1,5 @@
-import Utils from "../utils/BaseUtils"
-import InterfaceConstants from "../utils/APIConstants";
+import Utils from "../../../base/utils/BaseUtils"
+import InterfaceConstants from "../../../base/utils/APIConstants";
 
 class MenuService{
     /**

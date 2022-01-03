@@ -1,15 +1,21 @@
 <template>
-  <SearchForm :fields="searchFields" :form="searchForm" @search="search"/>
-  <Table :data="tableData" :fields="tableFields" :page-info="pageInfo"/>
+  <SearchForm :search-fields="searchFields" :table-fields="tableFields" :options="options" :service="service">
+    <ButtonGroup @add="showOrHideAddModel"/>
+
+  </SearchForm>
+  <AddForm :fields="addFields" :options="addModelOptions" @showOrHideAddModel="showOrHideAddModel" @save="save"/>
+
 </template>
 
 <script>
 import Table from "./Table";
 import SearchForm from "./SearchForm";
 import BaseUtils from "../base/utils/BaseUtils";
+import ButtonGroup from "./ButtonGroup";
+import AddForm from "./AddForm";
 export default {
   name: "Model",
-  components: {Table, SearchForm},
+  components: {AddForm, ButtonGroup, Table, SearchForm},
   props:{
     tableFields:{
       type: Array,
@@ -19,33 +25,49 @@ export default {
       type: Array,
       required: true
     },
+    options:{
+      type: Object,
+      required: true
+    },
+    addFields:{
+      type: Array,
+      required: false
+    },
     service:{
       required: true
     }
   },
   data(){
     return{
-      tableData:[],
-      searchForm:{},
-      pageInfo: {
-        pageNum: 1,
-        pageSize: 10
-      },
+        addModelOptions:{
+          // 新增表单的显示与隐藏
+          addModelDrawer: false,
+          inline: true,
+          size:'30%',
+        },
     }
   },
   created() {
-    this.search();
-    console.log(this.tableData);
   },
   methods:{
-    search(){
+    showOrHideAddModel(isShow){
+      if(!isShow && isShow instanceof Boolean){
+        this.addModelOptions.addModelDrawer = isShow;
+      }else{
+        this.addModelOptions.addModelDrawer = !this.addModelOptions.addModelDrawer;
+      }
+    },
+    save(model){
       let that = this;
-      let form = params = BaseUtils.getTarget(this.searchForm);
-      let params = Object.assign(form, this.pageInfo);
-      this.service.list(params).then((response)=>{
-        that.tableData = response.data;
-        that.pageInfo = response.pageInfo;
-      })
+      this.service.add(model).then((response)=>{
+        that.$eventBus.$emit("search");
+      });
+    },
+    upt(){
+
+    },
+    del(){
+
     }
   }
 }

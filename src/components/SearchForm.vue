@@ -1,44 +1,57 @@
 <template>
-  <el-form :inline="true" :model="form" class="form-inline">
-    <el-form-item :label="item.label" v-for="item in fields">
-      <el-input v-if="item.type === 'text'" v-model="form[item.field]" :placeholder="item.placeholder"></el-input>
-      <el-select v-if="item.type === 'select'" v-model="form[item.field]" :placeholder="item.placeholde">
-        <el-option :label="option.label" :value="option.value" v-for="option in item.options"></el-option>
-      </el-select>
-
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="search()">搜索</el-button>
-      <el-button type="danger">重置</el-button>
-
-    </el-form-item>
-
-  </el-form>
+  <Form :fields="searchFields" :form="form" :options="options.searchOptions"></Form>
+  <slot/>
+  <Table :data="tableData" :fields="tableFields" :page-info="pageInfo"/>
 </template>
 
 <script>
+import ButtonGroup from "./ButtonGroup";
+import Form from "./Form";
+import BaseUtils from "../base/utils/BaseUtils";
 export default {
   name: "SearchForm",
+  components: {Form,ButtonGroup},
   props: {
-    fields:{
+    searchFields: {
       type: Array,
     },
-    form:{
+    tableFields:{
+      type: Array,
+      required:true,
+    },
+    options:{
       type: Object,
     },
+    service:{
+      required: true
+    }
   },
   data() {
     return {
-      searchForm: {}
+      form:{},
+      tableData:[],
+      pageInfo: {
+        pageNum: 1,
+        pageSize: 10
+      },
     }
   },
   created() {
-    console.log(this.fields);
+    this.search();
+    this.$eventBus.$on("search",this.search)
   },
-  methods:{
+  methods: {
     search(){
-      this.$emit("search")
-    }
+      let that = this;
+      let form = params = BaseUtils.getTarget(this.form);
+      let params = Object.assign(form, this.pageInfo);
+      this.service.list(params).then((response)=>{
+        that.tableData = response.content;
+        that.pageInfo = response.pageInfo;
+        console.log(that.tableData);
+        console.log(that.pageInfo);
+      })
+    },
   }
 }
 </script>
@@ -48,7 +61,8 @@ export default {
   display: flex;
   justify-content: flex-start;
 }
-.form-inline .el-form-item ::v-deep.el-form-item__label{
+
+.form-inline .el-form-item ::v-deep.el-form-item__label {
   text-indent: 10px;
 }
 </style>
