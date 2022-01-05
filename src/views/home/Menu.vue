@@ -4,7 +4,7 @@
 
 <script>
 import Model from "@/components/Model";
-import ServiceCenter from "@/base/utils/ServiceCenter";
+import {MenuService} from "@/services/ServiceCenter";
 
 export default {
   name: "Menu",
@@ -26,7 +26,7 @@ export default {
             ]
           },
         ],
-      service:ServiceCenter.MenuService
+      service:MenuService
     }
   },
   created() {

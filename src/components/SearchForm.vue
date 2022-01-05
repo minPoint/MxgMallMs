@@ -38,7 +38,7 @@ export default {
   },
   created() {
     this.search();
-    this.$eventBus.$on("search",this.search)
+    this.$bus.on("search",this.search)
   },
   methods: {
     search(){

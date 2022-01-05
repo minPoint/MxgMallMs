@@ -4,7 +4,7 @@
 
 <script>
 import Model from "@/components/Model";
-import ServiceCenter from "@/base/utils/ServiceCenter";
+import {MallService} from "@/services/ServiceCenter";
 
 export default {
   name: "MallIndex",
@@ -36,7 +36,7 @@ export default {
         {label: "名称", field: "name", placeholder: "请输入名称", type: "text"},
         {label: "编码", field: "code", placeholder: "请输入编码", type: "text"},
       ],
-      service: ServiceCenter.MallService
+      service: MallService
     }
   },
 }

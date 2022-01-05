@@ -28,7 +28,8 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 
-import ServiceCenter from "../base/utils/ServiceCenter";
+import ServiceCenter from "@/base/utils/ServiceCenter";
+import {MenuService} from "@/services/ServiceCenter";
 
 export default {
   name: 'Index',
@@ -49,7 +50,7 @@ export default {
      */
     login() {
       // 请求路由配置
-      ServiceCenter.MenuService.list().then((response)=>{
+      MenuService.list().then((response)=>{
         // 获取管理页面主路由
         let homePageMenu = response.content.filter(e=>{ return e.homePage === 1})[0];
         let rootRouter = this.createRouter(homePageMenu);
@@ -60,7 +61,7 @@ export default {
           this.$router.addRoute(rootRouter);
         }
 
-        return ServiceCenter.MenuService.listMenuTree();
+        return MenuService.listMenuTree();
       }).then((response) => {
         this.$store.commit("setMenuList", response);
         this.$router.replace({name: "Home"})

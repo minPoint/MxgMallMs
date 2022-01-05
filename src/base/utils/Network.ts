@@ -4,23 +4,29 @@ import BaseUtils from "./BaseUtils";
 
 class Network {
 
-    GET = (url,params) =>{
+    constructor() {
+    }
+
+    static GET = (url : String,params : any) =>{
         return new Promise((resolve, reject) => {
             axios.get(url, {params},{} )
                 .then((response)=>{
-                    resolve(response.data.data);
+                    if(response.data){
+                        resolve(response.data.data);
+                    }
                 })
         });
     };
-    POST = (url, params) => {
+    static POST = (url : String, params : any) => {
         return new Promise((resolve, reject) => {
             axios.post(url, params, {})
                 .then((response) => {
-                    resolve(response.data.data);
+                    if(response.data){
+                        resolve(response.data.data);
+                    }
                 })
         });
     }
 }
-
 
 export default Network;

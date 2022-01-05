@@ -60,7 +60,7 @@ export default {
     save(model){
       let that = this;
       this.service.add(model).then((response)=>{
-        that.$eventBus.$emit("search");
+        that.$bus.emit("search");
       });
     },
     upt(){
