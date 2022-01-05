@@ -1,5 +1,6 @@
 <template>
-  <Model :table-fields="tableFields" :service="service" :search-fields="searchFields" :add-fields="addFields" :options="options" :demo="demo"></Model>
+  <Model :table-fields="tableFields" :service="service" :search-fields="searchFields" :add-fields="addFields" :options="options"></Model>
+
 </template>
 
 <script>
@@ -13,9 +14,6 @@ export default {
     return {
       options: {
         needAddModel: true,
-        searchOptions:{
-          inline: true
-        },
       },
       tableFields: [
         {prop: "name", label: "名称"},

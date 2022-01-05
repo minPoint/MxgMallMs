@@ -2,13 +2,6 @@
   <el-table :data="data" v-if="data" border style="width: 100%;margin-top: 20px">
     <el-table-column v-for="col in fields" :prop="col.prop" :label="col.label"/>
   </el-table>
-  <el-pagination
-      v-model:currentPage="pageInfo.pageNum"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="pageInfo.pageSize"
-      layout="sizes, prev, pager, next"
-      :total="pageInfo.total"
-  />
 </template>
 
 <script>
@@ -20,9 +13,6 @@ export default {
     },
     fields:{
       type: Array,
-    },
-    pageInfo:{
-      type: Object
     },
     options: {
       table: {

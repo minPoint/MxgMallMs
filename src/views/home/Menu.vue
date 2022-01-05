@@ -1,5 +1,5 @@
 <template>
-  <Model :table-fields="tableFields" :service="service" :search-fields="searchFields" ></Model>
+  <Model :table-fields="tableFields" :service="service" :search-fields="searchFields" :options="options" ></Model>
 </template>
 
 <script>

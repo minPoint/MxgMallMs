@@ -1,7 +1,6 @@
 <template>
-  <SearchForm :search-fields="searchFields" :table-fields="tableFields" :options="options" :service="service">
+  <SearchForm :search-fields="searchFields" :table-fields="tableFields" :options="searchOptions" :service="service">
     <ButtonGroup @add="showOrHideAddModel"/>
-
   </SearchForm>
   <AddForm :fields="addFields" :options="addModelOptions" @showOrHideAddModel="showOrHideAddModel" @save="save"/>
 
@@ -39,12 +38,15 @@ export default {
   },
   data(){
     return{
-        addModelOptions:{
-          // 新增表单的显示与隐藏
-          addModelDrawer: false,
-          inline: true,
-          size:'30%',
-        },
+      searchOptions: {
+        inline: true
+      },
+      addModelOptions: {
+        // 新增表单的显示与隐藏
+        addModelDrawer: false,
+        inline: true,
+        size: '30%',
+      },
     }
   },
   created() {
