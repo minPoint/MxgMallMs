@@ -2,7 +2,8 @@
   <SearchForm :search-fields="searchFields" :table-fields="tableFields" :options="searchOptions" :service="service">
     <ButtonGroup @add="showOrHideAddModel"/>
   </SearchForm>
-  <AddForm :fields="addFields" :options="addModelOptions" @showOrHideAddModel="showOrHideAddModel" @save="save"/>
+  <AddForm :fields="addFields" :options="addModelOptions" @showOrHideAddModel="showOrHideAddModel" @save="save"
+           :ref="'add' + options.ref + 'Model'"/>
 
 </template>
 
@@ -50,8 +51,12 @@ export default {
     }
   },
   created() {
+    this.searchOptions.table = this.options.table
+    this.searchOptions.ref = this.options.ref
+    this.addModelOptions.ref = this.options.ref
   },
   methods:{
+    // 弹出 / 隐藏 新增表单
     showOrHideAddModel(isShow){
       if(!isShow && isShow instanceof Boolean){
         this.addModelOptions.addModelDrawer = isShow;
@@ -59,10 +64,16 @@ export default {
         this.addModelOptions.addModelDrawer = !this.addModelOptions.addModelDrawer;
       }
     },
+    // 重置新增表单
+    resetAddForm(){
+      this.$refs[this.addForm].resetForm();
+    },
+    // 保存新增表单内容
     save(model){
-      let that = this;
       this.service.add(model).then((response)=>{
-        that.$bus.emit("search");
+        this.showOrHideAddModel(false);
+        this.resetAddForm();
+        this.$bus.emit("search");
       });
     },
     upt(){
@@ -70,6 +81,11 @@ export default {
     },
     del(){
 
+    }
+  },
+  computed:{
+    addForm(){
+      return "add" + this.addModelOptions.ref +"Model"
     }
   }
 }

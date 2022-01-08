@@ -1,5 +1,5 @@
 <template>
-  <el-form :inline="true" :model="form" :class="{'form-inline': options.inline ? options.inline : true}" v-if="fields && fields.length > 0">
+  <el-form :inline="true" :model="form" :class="{'form-inline': options.inline ? options.inline : true}" v-if="fields && fields.length > 0" :ref="'add' + options.ref + 'Form'">
     <el-form-item :label="item.label" v-for="item in fields">
       <el-input v-if="item.type === 'text'" v-model="form[item.field]" :placeholder="item.placeholder"></el-input>
       <el-select v-if="item.type === 'select'" v-model="form[item.field]" :placeholder="item.placeholde">

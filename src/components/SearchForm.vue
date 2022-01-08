@@ -1,13 +1,20 @@
 <template>
-  <Form :fields="searchFields" :form="form" :options="options"></Form>
-  <slot/>
-  <Table :data="tableData" :fields="tableFields"/>
-  <el-pagination
-      v-model:currentPage="pageInfo.pageNum"
-      :page-sizes="[10,20,40,80,100]"
-      layout="sizes, prev, pager, next"
-      :total="pageInfo.total"
-  />
+  <div class="search-content">
+    <div class="search-header">
+      <Form :fields="searchFields" :form="form" :options="options"></Form>
+      <slot/>
+      <Table :data="tableData" :fields="tableFields" :options="options"/>
+    </div>
+    <div class="search-footer">
+      <el-pagination
+          v-model:currentPage="pageInfo.pageNum"
+          :page-sizes="[10,20,40,80,100]"
+          layout="total, sizes, prev, pager, next"
+          :total="pageInfo.total"
+      />
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -48,6 +55,12 @@ export default {
     this.search();
     this.$bus.on("search", this.search)
   },
+  watch:{
+    'pageInfo.pageNum'(v1,v2){
+      this.search();
+    },
+    immediate:false
+  },
   methods: {
     search() {
       let that = this;
@@ -56,8 +69,6 @@ export default {
       this.service.list(params).then((response) => {
         that.tableData = response.content;
         that.pageInfo = response.pageInfo;
-        console.log(that.tableData);
-        console.log(that.pageInfo);
       })
     },
   }
@@ -65,6 +76,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.search-content{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .form-inline {
   display: flex;
   justify-content: flex-start;

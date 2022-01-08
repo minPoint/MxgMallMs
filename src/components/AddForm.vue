@@ -59,6 +59,9 @@ export default {
     },
     save(){
       this.$emit("save", BaseUtils.getTarget(this.form));
+    },
+    resetForm(){
+      this.form = {};
     }
   }
 }

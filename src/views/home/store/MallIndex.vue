@@ -13,7 +13,11 @@ export default {
   data() {
     return {
       options: {
-        needAddModel: true,
+        ref: "Mall",
+        table:{
+          index: true,
+          section:  true
+        }
       },
       tableFields: [
         {prop: "name", label: "名称"},
