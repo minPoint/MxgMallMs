@@ -9,10 +9,10 @@ class BaseServiceImpl implements BaseService{
     add = (params) => {
     }
 
-    del = () => {
+    del = (params) => {
     }
 
-    upt = () => {
+    upt = (params) => {
     }
     /**
      * 查询 菜单 列表

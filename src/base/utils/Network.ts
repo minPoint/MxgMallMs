@@ -1,5 +1,6 @@
 import axios from "../../axios";
 import BaseUtils from "./BaseUtils";
+import {ElMessage} from "element-plus";
 
 
 class Network {
@@ -26,7 +27,18 @@ class Network {
                     }
                 })
         });
-    }
+    };
+
+    // static DELETE = (url : String, params : any) => {
+    //     return new Promise((resolve, reject) => {
+    //         axios.delete(url, {params}, {})
+    //             .then((response) => {
+    //                 if(response.data){
+    //                     resolve(response.data.data);
+    //                 }
+    //             })
+    //     });
+    // }
 }
 
 export default Network;

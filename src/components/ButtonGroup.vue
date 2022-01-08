@@ -30,11 +30,10 @@ export default {
       this.$emit("add")
     },
     upt() {
-      this.$emit("add")
+      this.$emit("upt")
     },
     del() {
-
-      this.$emit("add")
+      this.$emit("del")
     }
   }
 }

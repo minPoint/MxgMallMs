@@ -1,9 +1,9 @@
 <template>
   <div class="search-content">
     <div class="search-header">
-      <Form :fields="searchFields" :form="form" :options="options"></Form>
+      <Form :fields="searchFields" :form="form" :options="options" @search="search"></Form>
       <slot/>
-      <Table :data="tableData" :fields="tableFields" :options="options"/>
+      <Table :data="tableData" :fields="tableFields" :options="options" :ref="tableRef"/>
     </div>
     <div class="search-footer">
       <el-pagination
@@ -11,6 +11,7 @@
           :page-sizes="[10,20,40,80,100]"
           layout="total, sizes, prev, pager, next"
           :total="pageInfo.total"
+          :current-page="search"
       />
     </div>
 
@@ -55,12 +56,6 @@ export default {
     this.search();
     this.$bus.on("search", this.search)
   },
-  watch:{
-    'pageInfo.pageNum'(v1,v2){
-      this.search();
-    },
-    immediate:false
-  },
   methods: {
     search() {
       let that = this;
@@ -71,6 +66,14 @@ export default {
         that.pageInfo = response.pageInfo;
       })
     },
+    getSelectDate(){
+      return this.$refs[this.tableRef].getSelectDate();
+    }
+  },
+  computed:{
+    tableRef(){
+      return 'search' + this.options.ref + 'Table';
+    }
   }
 }
 </script>

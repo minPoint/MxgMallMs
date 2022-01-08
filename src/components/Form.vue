@@ -7,9 +7,8 @@
       </el-select>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="search()" v-if="options.type === 'search'" v-text="options.searchBtnTxt ? options.searchBtnTxt : '搜索'"></el-button>
-      <el-button type="danger" v-if="options.type === 'search'"  v-text="options.resetBtnTxt ? options.resetBtnTxt : '重置'"></el-button>
-      <el-button type="primary" @click="save()" v-if="options.type === 'add' || options.type === 'upt'"  v-text="options.saveBtnTxt ? options.saveBtnTxt : '保存'"></el-button>
+      <el-button type="primary" @click="search()" v-text="options.searchBtnTxt ? options.searchBtnTxt : '搜索'"></el-button>
+      <el-button type="danger" v-text="options.resetBtnTxt ? options.resetBtnTxt : '重置'"></el-button>
     </el-form-item>
 
   </el-form>
@@ -36,6 +35,7 @@ export default {
   },
   methods: {
     search() {
+      console.log("se")
       this.$emit('search')
     },
     save() {

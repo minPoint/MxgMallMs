@@ -1,18 +1,18 @@
 <template>
-  <SearchForm :search-fields="searchFields" :table-fields="tableFields" :options="searchOptions" :service="service">
-    <ButtonGroup @add="showOrHideAddModel"/>
+  <SearchForm :search-fields="searchFields" :table-fields="tableFields" :options="searchOptions" :service="service" :ref="searchModelRef">
+    <ButtonGroup @add="showOrHideAddModel" @del="del"/>
   </SearchForm>
   <AddForm :fields="addFields" :options="addModelOptions" @showOrHideAddModel="showOrHideAddModel" @save="save"
-           :ref="'add' + options.ref + 'Model'"/>
+           :ref="addFormRef"/>
 
 </template>
 
 <script>
 import Table from "./Table";
 import SearchForm from "./SearchForm";
-import BaseUtils from "../base/utils/BaseUtils";
 import ButtonGroup from "./ButtonGroup";
 import AddForm from "./AddForm";
+import {ElMessage} from "element-plus";
 export default {
   name: "Model",
   components: {AddForm, ButtonGroup, Table, SearchForm},
@@ -66,13 +66,17 @@ export default {
     },
     // 重置新增表单
     resetAddForm(){
-      this.$refs[this.addForm].resetForm();
+      this.$refs[this.addFormRef].resetForm();
     },
     // 保存新增表单内容
     save(model){
       this.service.add(model).then((response)=>{
         this.showOrHideAddModel(false);
         this.resetAddForm();
+        ElMessage({
+          message: '保存成功',
+          type: 'success',
+        })
         this.$bus.emit("search");
       });
     },
@@ -80,12 +84,23 @@ export default {
 
     },
     del(){
-
+      let selectDate = this.$refs[this.searchModelRef].getSelectDate();
+      let idList = selectDate.map(e => e.id);
+      this.service.del(idList).then((response)=>{
+        ElMessage({
+          message: '删除成功',
+          type: 'success',
+        });
+        this.$bus.emit("search");
+      });
     }
   },
   computed:{
-    addForm(){
+    addFormRef(){
       return "add" + this.addModelOptions.ref +"Model"
+    },
+    searchModelRef(){
+      return "search" + this.addModelOptions.ref +"Model"
     }
   }
 }

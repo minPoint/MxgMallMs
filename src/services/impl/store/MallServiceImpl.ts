@@ -19,6 +19,14 @@ class MallServiceImpl extends BaseServiceImpl implements MallService{
     add = (params) =>{
         return Network.POST(MallConstants.ADD, params)
     }
+
+    /**
+     * 删除
+     * @param params
+     */
+    del = (params) =>{
+        return Network.POST(MallConstants.DEL, params)
+    }
     /**
      * 查询 菜单 列表
      * @param params 参数

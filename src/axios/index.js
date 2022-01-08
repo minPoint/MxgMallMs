@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {ElMessage} from "element-plus";
 
 let config = {
     timeout: 1000,
@@ -25,6 +26,10 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
     (response)=>{
         // Do something with response data
+        if (!(response.data && response.data.code === 0)){
+            let msg = response.data && response.data.message ? response.data.message : "系统响应异常";
+            ElMessage.error(msg);
+        }
         return response;
     },
     (error)=>{

@@ -32,6 +32,19 @@ export default {
   margin: 0;
   padding: 0;
 }
+*::-webkit-scrollbar{
+  width: 10px;
+}
+*::-webkit-scrollbar-button{
+  display: none;
+}
+*::-webkit-scrollbar-thumb{
+  border-radius: 4px;
+  background-color: #CCCCCC;
+}
+*::-webkit-scrollbar-thumb:hover{
+  background-color: #6c6c6c;
+}
 html,body{
   width: 100vw;
   height: 100vh;

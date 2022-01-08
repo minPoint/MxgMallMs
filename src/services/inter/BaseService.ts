@@ -1,9 +1,9 @@
 interface BaseService{
     add(params: any);
 
-    del();
+    del(params: any);
 
-    upt();
+    upt(params: any);
 
     list(params: any);
 }
